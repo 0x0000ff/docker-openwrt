@@ -1,8 +1,15 @@
 #!/bin/sh
 set -e
 
+get_latest_stable() {
+	rsync rsync://ftp.snt.utwente.nl/lede/releases/ | awk '$5 ~ /^[0-9]/ && $5 !~ /-/ {print $5}' | tail -n 1
+}
 
 download_rootfs() {
+	if [ "$OPENWRT_SOURCE_VER" = "latest_stable" ]  ; then
+		OPENWRT_SOURCE_VER=$(get_latest_stable)
+		fi
+
 	case ${OPENWRT_SOURCE_VER} in
 		snapshot)
 		# special snowflake raspberry pi zero
@@ -38,7 +45,7 @@ download_rootfs() {
 				rootfs_url="https://downloads.openwrt.org/releases/${OPENWRT_SOURCE_VER}/targets/armvirt/64/openwrt-${OPENWRT_SOURCE_VER}-armvirt-64-default-rootfs.tar.gz"
 				version="https://downloads.openwrt.org/releases/${OPENWRT_SOURCE_VER}/targets/armvirt/64/version.buildinfo"
 			elif [ "$ARCH" = "x86-64" ] ; then
-				rootfs_url="https://downloads.openwrt.org/releases/${OPENWRT_SOURCE_VER}/targets/x86/64/openwrt-${OPENWRT_SOURCE_VER}-x86-64-generic-rootfs.tar.gz"
+				rootfs_url="https://downloads.openwrt.org/releases/${OPENWRT_SOURCE_VER}/targets/x86/64/openwrt-${OPENWRT_SOURCE_VER}-x86-64-rootfs.tar.gz"
 				version="https://downloads.openwrt.org/releases/${OPENWRT_SOURCE_VER}/targets/x86/64/version.buildinfo"
 			else
 				echo "Unsupported architecture!"

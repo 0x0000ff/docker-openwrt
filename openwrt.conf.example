@@ -1,7 +1,8 @@
 ### Sample OpenWrt config file ###
 
 ## General
-# OpenWrt version. Set to 'snapshot' to build from latest snapshot
+# OpenWrt version. Set to 'snapshot' to build from latest snapshot. 
+# Set to 'latest_stable' to build from the newest stable release.
 OPENWRT_SOURCE_VER=19.07.7
 # Architecture: one of x86-64, armvirt-32 (Raspberry Pi 2 / 3 / 4),
 # armvirt-64 (Raspberry Pi 3 / 4 running 64-bit OS, ODroid-C2 or similar),
